@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dumpster Crunchers — Mobile Compaction | Cut Hauls in Half | Denver Metro</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E85D04;
+    --orange-light: #FF6B1A;
+    --orange-glow: rgba(232,93,4,0.18);
+    --blue: #38B6FF;
+    --blue-dark: #1A9ACC;
+    --blue-glow: rgba(56,182,255,0.12);
+    --black: #0A0A0A;
+    --dark: #141414;
+    --mid: #1F1F1F;
+    --card: #242424;
+    --white: #FFFFFF;
+    --muted: rgba(255,255,255,0.45);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 52px; background: rgba(10,10,10,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .logo img { height: 52px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta { background: var(--orange) !important; color: var(--white) !important; padding: 11px 24px !important; font-weight: 800 !important; transition: background 0.2s, transform 0.2s !important; }
+  .nav-cta:hover { background: var(--orange-light) !important; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 148px 52px 88px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 85% 40%, var(--orange-glow) 0%, transparent 65%), radial-gradient(ellipse 40% 40% at 15% 75%, var(--blue-glow) 0%, transparent 60%); pointer-events: none; }
+  .hero-ghost { position: absolute; right: -10px; top: 50%; transform: translateY(-52%); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(160px, 22vw, 320px); color: transparent; -webkit-text-stroke: 1px rgba(232,93,4,0.12); line-height: 1; pointer-events: none; user-select: none; opacity: 0; animation: fadeIn 1.2s ease 0.6s forwards; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards; }
+  .hero-tag::before { content: ''; display: block; width: 28px; height: 2px; background: var(--blue); }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(60px, 9.5vw, 136px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.01em; max-width: 860px; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+  .hero h1 .hl { color: var(--orange); display: block; }
+  .hero h1 .ol { -webkit-text-stroke: 2px var(--white); color: transparent; display: block; }
+  .hero-sub { font-size: 18px; font-weight: 300; color: var(--muted); max-width: 540px; line-height: 1.65; margin-top: 32px; opacity: 0; animation: fadeUp 0.7s ease 0.33s forwards; }
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+  .proof-pill { display: inline-flex; align-items: center; gap: 12px; background: rgba(56,182,255,0.1); border: 1px solid rgba(56,182,255,0.25); border-radius: 100px; padding: 10px 20px 10px 14px; margin-top: 28px; font-size: 14px; color: var(--blue); font-weight: 500; opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; }
+  .proof-pill strong { color: var(--white); font-weight: 700; }
+  .proof-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: blink 2s ease infinite; flex-shrink: 0; }
+  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+  .hero-actions { display: flex; gap: 16px; margin-top: 40px; align-items: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s ease 0.48s forwards; }
+  .btn-primary { background: var(--orange); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 38px; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(232,93,4,.35); }
+  .btn-ghost { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.18); transition: color 0.2s, border-color 0.2s; }
+  .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+  .hero-stats { display: flex; gap: 52px; margin-top: 72px; padding-top: 44px; border-top: 1px solid rgba(255,255,255,.07); opacity: 0; animation: fadeUp 0.7s ease 0.58s forwards; flex-wrap: wrap; }
+  .stat-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 52px; line-height: 1; }
+  .stat-num.co { color: var(--orange); }
+  .stat-num.cb { color: var(--blue); }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-top: 5px; }
+
+  /* ORANGE BANNER */
+  .half-banner { background: var(--orange); padding: 64px 52px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; position: relative; overflow: hidden; }
+  .half-banner::after { content: 'CUT HAULS IN HALF'; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 140px; text-transform: uppercase; color: rgba(0,0,0,0.07); white-space: nowrap; pointer-events: none; line-height: 1; }
+  .half-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-bottom: 12px; }
+  .half-banner h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(44px,6vw,80px); text-transform: uppercase; line-height: .92; color: var(--white); }
+  .half-banner h2 .blk { color: rgba(0,0,0,0.7); }
+  .half-banner p { font-size: 17px; color: rgba(255,255,255,0.75); margin-top: 16px; max-width: 480px; line-height: 1.6; }
+  .half-right { text-align: center; background: rgba(0,0,0,.18); padding: 36px 52px; flex-shrink: 0; position: relative; z-index: 1; }
+  .big-half { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 100px; line-height: 1; color: var(--white); }
+  .big-half-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+  /* TICKER */
+  .value-strip { background: var(--dark); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); padding: 16px 0; overflow: hidden; }
+  .ticker { display: flex; gap: 60px; animation: ticker 22s linear infinite; white-space: nowrap; }
+  .ticker span { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+  .ticker .td { color: var(--orange); font-size: 18px; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* SECTION SHARED */
+  section { padding: 104px 52px; }
+  .section-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--blue); display: block; }
+  .section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(38px,5.5vw,70px); text-transform: uppercase; line-height: .95; letter-spacing: -.01em; }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--dark); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 56px; }
+  .step { background: var(--mid); padding: 40px 32px; position: relative; overflow: hidden; transition: background .25s; }
+  .step::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+  .step:hover { background: var(--card); }
+  .step:hover::after { transform: scaleX(1); }
+  .step-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 88px; color: rgba(232,93,4,.08); position: absolute; top: 12px; right: 16px; line-height: 1; pointer-events: none; transition: color .3s; }
+  .step:hover .step-num { color: rgba(232,93,4,.16); }
+  .step-icon { font-size: 30px; margin-bottom: 16px; }
+  .step h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 21px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* PROOF */
+  .proof-section { background: var(--black); }
+  .proof-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 56px; }
+  .proof-card { background: var(--dark); padding: 48px 40px; border-top: 3px solid transparent; transition: background 0.3s; }
+  .proof-card:nth-child(1) { border-color: var(--orange); }
+  .proof-card:nth-child(2) { border-color: var(--blue); }
+  .proof-card:nth-child(3) { border-color: var(--orange); }
+  .proof-card:hover { background: var(--mid); }
+  .proof-big { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 76px; line-height: 1; margin-bottom: 8px; }
+  .proof-card:nth-child(1) .proof-big { color: var(--orange); }
+  .proof-card:nth-child(2) .proof-big { color: var(--blue); }
+  .proof-card:nth-child(3) .proof-big { color: var(--orange); }
+  .proof-head { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .proof-body { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* BEFORE / AFTER GALLERY */
+  .gallery-section { background: var(--dark); }
+  .gallery-intro { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.65; margin-top: 20px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-top: 56px; }
+  .ba-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .ba-img { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--mid); }
+  .ba-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; filter: brightness(0.88); }
+  .ba-img:hover img { transform: scale(1.04); filter: brightness(1); }
+  .ba-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; }
+  .ba-label.before { background: rgba(232,93,4,0.88); color: var(--white); }
+  .ba-label.after { background: rgba(56,182,255,0.88); color: var(--white); }
+  .action-shot { position: relative; overflow: hidden; height: 440px; margin-top: 3px; }
+  .action-shot img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: brightness(0.65); }
+  .action-shot-text { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 32px; }
+  .gallery-cta { margin-top: 48px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .gallery-cta p { font-size: 16px; color: var(--muted); }
+  .gallery-cta strong { color: var(--white); }
+
+  /* CALC */
+  .calc-section { background: var(--black); }
+  .calc-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
+  .calc-box { background: var(--dark); border: 1px solid rgba(255,255,255,.06); padding: 48px; }
+  .calc-row { margin-bottom: 32px; }
+  .calc-row label { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .calc-row input[type="range"] { width: 100%; -webkit-appearance: none; height: 2px; background: rgba(255,255,255,.1); outline: none; cursor: pointer; }
+  .calc-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--orange); border-radius: 50%; cursor: pointer; transition: transform 0.15s; }
+  .calc-row input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+  .calc-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 30px; color: var(--white); margin-top: 8px; }
+  .result-main { background: var(--orange); padding: 44px 40px; text-align: center; }
+  .result-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-bottom: 8px; }
+  .result-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 80px; color: var(--white); line-height: 1; }
+  .result-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-top: 6px; }
+  .result-annual { background: var(--blue-dark); padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; margin-top: 3px; }
+  .result-annual-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .14em; color: rgba(255,255,255,.7); }
+  .result-annual-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 40px; color: var(--white); }
+
+  /* MATERIALS */
+  .materials-section { background: var(--dark); }
+  .materials-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 56px; }
+  .material-card { background: var(--mid); padding: 32px 28px; transition: background 0.2s, transform 0.2s; }
+  .material-card:hover { background: var(--orange); transform: translateY(-4px); }
+  .material-card:hover .mat-name { color: var(--white); }
+  .mat-icon { font-size: 32px; margin-bottom: 14px; }
+  .mat-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17px; text-transform: uppercase; letter-spacing: .04em; color: rgba(255,255,255,.75); transition: color 0.2s; }
+
+  /* AREA */
+  .area-section { background: var(--black); }
+  .area-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 56px; align-items: start; }
+  .area-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .area-item { background: var(--dark); padding: 22px 26px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; text-transform: uppercase; letter-spacing: .05em; border-left: 3px solid transparent; transition: border-color 0.2s, background 0.2s, color 0.2s; color: var(--muted); }
+  .area-item:hover { border-color: var(--blue); background: var(--mid); color: var(--white); }
+  .hours-block h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .hour-row { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 15px; }
+  .hour-day { color: var(--muted); }
+  .hour-time { font-weight: 500; }
+
+  /* CTA */
+  .cta-band { background: var(--black); padding: 104px 52px; text-align: center; border-top: 1px solid rgba(255,255,255,.05); position: relative; overflow: hidden; }
+  .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,93,4,.12) 0%, transparent 60%); pointer-events: none; }
+  .cta-band h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(44px,7.5vw,100px); text-transform: uppercase; color: var(--white); line-height: .93; margin-bottom: 16px; position: relative; }
+  .cta-band h2 .co { color: var(--orange); }
+  .cta-band h2 .cb { color: var(--blue); }
+  .cta-sub { font-size: 17px; color: var(--muted); margin-bottom: 44px; position: relative; }
+  .btn-cta { background: var(--orange); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: .12em; text-transform: uppercase; padding: 20px 54px; text-decoration: none; display: inline-block; position: relative; transition: background .2s, transform .2s, box-shadow .2s; }
+  .btn-cta:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,93,4,.35); }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 40px 52px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,.05); flex-wrap: wrap; gap: 20px; }
+  .footer-logo img { height: 52px; width: auto; display: block; }
+  footer p { font-size: 13px; color: rgba(255,255,255,.25); }
+  .footer-links { display: flex; gap: 24px; align-items: center; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,.25); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,.65); }
+  .footer-links span { color: rgba(255,255,255,.1); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    section, .cta-band { padding: 72px 24px; }
+    .hero { padding: 120px 24px 64px; }
+    .hero-ghost { display: none; }
+    .hero-stats { gap: 32px; }
+    .half-banner { padding: 48px 24px; grid-template-columns: 1fr; }
+    .half-right { display: none; }
+    .steps-grid, .proof-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .calc-layout { grid-template-columns: 1fr; gap: 32px; }
+    .materials-grid { grid-template-columns: repeat(2,1fr); }
+    .area-layout { grid-template-columns: 1fr; gap: 48px; }
+    footer { flex-direction: column; text-align: center; padding: 36px 24px; }
+    .action-shot { height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <img src="https://static.wixstatic.com/media/2b04d8_61afd7d07fc54c8fa52093956743a578~mv2.jpg" alt="Dumpster Crunchers">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#gallery">Before &amp; After</a></li>
+    <li><a href="#savings">Savings Calc</a></li>
+    <li><a href="#area">Service Area</a></li>
+    <li><a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="nav-cta">Free Demo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ghost">½</div>
+  <div class="hero-tag">📍 Denver Metro · Mobile Dumpster Compaction</div>
+  <h1>
+    <span>We Cut Your</span>
+    <span class="hl">Hauls in Half.</span>
+    <span class="ol">For Real.</span>
+  </h1>
+  <p class="hero-sub">We compact your dumpster on-site in 5 minutes — <strong>so one bin does the work of two.</strong> Fewer pickups, lower bills, zero hassle. Keep your hauler, change nothing, save everything.</p>
+  <div class="proof-pill">
+    <span class="proof-dot"></span>
+    Clients typically see <strong>&nbsp;30–60% fewer hauls&nbsp;</strong> per month — often cut in half
+  </div>
+  <div class="hero-actions">
+    <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="btn-primary">Book a Free Demo</a>
+    <a href="#how" class="btn-ghost">See How It Works →</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num co">½</div>
+      <div class="stat-label">Hauls for Most Clients</div>
+    </div>
+    <div>
+      <div class="stat-num cb">80%</div>
+      <div class="stat-label">More Dumpster Capacity</div>
+    </div>
+    <div>
+      <div class="stat-num">5 min</div>
+      <div class="stat-label">On-Site Service Time</div>
+    </div>
+    <div>
+      <div class="stat-num co">$0</div>
+      <div class="stat-label">Equipment Cost to You</div>
+    </div>
+  </div>
+</section>
+
+<!-- HALF THE HAULS BANNER -->
+<div class="half-banner">
+  <div>
+    <div class="half-eyebrow">The Core Promise</div>
+    <h2>One Dumpster.<br><span class="blk">Double the Capacity.</span><br>Half the Hauls.</h2>
+    <p>The moment we leave, your "full" dumpster feels empty again. What would've been a $400 pickup call gets cancelled. Your crew keeps working. That's real money saved — every single cycle.</p>
+  </div>
+  <div class="half-right">
+    <div class="big-half">½</div>
+    <div class="big-half-label">The hauls you'll pay for</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="value-strip">
+  <div class="ticker">
+    <span>Cut Hauls in Half</span><span class="td">●</span>
+    <span>No Equipment Changes</span><span class="td">●</span>
+    <span>Keep Your Hauler</span><span class="td">●</span>
+    <span>Lower Carbon Footprint</span><span class="td">●</span>
+    <span>Immediate Savings</span><span class="td">●</span>
+    <span>5-Minute Service</span><span class="td">●</span>
+    <span>Zero Capital Expense</span><span class="td">●</span>
+    <span>Maximize Site Safety</span><span class="td">●</span>
+    <span>Cut Hauls in Half</span><span class="td">●</span>
+    <span>No Equipment Changes</span><span class="td">●</span>
+    <span>Keep Your Hauler</span><span class="td">●</span>
+    <span>Lower Carbon Footprint</span><span class="td">●</span>
+    <span>Immediate Savings</span><span class="td">●</span>
+    <span>5-Minute Service</span><span class="td">●</span>
+    <span>Zero Capital Expense</span><span class="td">●</span>
+    <span>Maximize Site Safety</span><span class="td">●</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-eyebrow reveal">The Process</div>
+  <h2 class="section-title reveal">Simple Service.<br>Massive Savings.</h2>
+  <div class="steps-grid">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-icon">📅</div>
+      <h3>Book a Free Demo</h3>
+      <p>Zero risk, zero commitment. We lock in a time to come to your site and prove the savings before you spend a dollar.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-icon">💥</div>
+      <h3>5-Minute Crunch</h3>
+      <p>Our specialized compactor rolls in and crunches your overflowing dumpster down in about 5 minutes. You don't lift a finger — just watch it shrink.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-icon">📦</div>
+      <h3>Regain 50–80% Capacity</h3>
+      <p>Your "full" dumpster suddenly feels near-empty. That haul you were about to call? Cancelled. That's real savings the moment we leave.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-icon">🔄</div>
+      <h3>Keep Filling</h3>
+      <p>Your crew stays productive. No interruptions, no overflow, no delays. We can compact 1–2 more times per cycle depending on material type.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">5</div>
+      <div class="step-icon">💰</div>
+      <h3>Haul Bill Drops</h3>
+      <p>Skip the expensive haul you would have paid for. This becomes obvious the moment you see it — and it happens every single cycle.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">6</div>
+      <div class="step-icon">📈</div>
+      <h3>Savings Compound</h3>
+      <p>Fewer interruptions. Productive crew. A waste bill that keeps shrinking. You'll never look back — waste management becomes far more efficient.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STATS -->
+<section class="proof-section" id="results">
+  <div class="section-eyebrow reveal">The Numbers</div>
+  <h2 class="section-title reveal">What Clients<br>Actually See</h2>
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-big">½</div>
+      <div class="proof-head">Hauls Eliminated</div>
+      <div class="proof-body">For many clients with the right material mix, haul frequency drops by half. Every pickup you skip is a full haul fee that stays in your pocket — permanently.</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-big">80%</div>
+      <div class="proof-head">Capacity Unlocked</div>
+      <div class="proof-body">A single crunch restores up to 80% of your dumpster's usable space in minutes. No new equipment. No workflow changes. Just instant room to keep working.</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-big">60%</div>
+      <div class="proof-head">Cost Reduction</div>
+      <div class="proof-body">Clients routinely cut their total hauling spend by 30–60%. The service pays for itself many times over — often on the very first crunch visit.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE & AFTER GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-eyebrow reveal">See It to Believe It</div>
+  <h2 class="section-title reveal">Before &amp; After</h2>
+  <p class="gallery-intro reveal">Real jobs. Real dumpsters. Real results. <span style="color:var(--orange)">Before</span> is what we show up to. <span style="color:var(--blue)">After</span> is what we leave behind.</p>
+
+  <div class="gallery-grid">
+
+    <!-- Pair 1 -->
+    <div class="ba-pair reveal">
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_3dd8120301f04d9e97d15679ef4799f5~mv2.jpeg" alt="Before — overflowing dumpster">
+        <div class="ba-label before">↑ Before — Full &amp; Overflowing</div>
+      </div>
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_cb229a7c7da0453083ea1b3f329d4620~mv2.jpeg" alt="After — dumpster compacted">
+        <div class="ba-label after">↓ After — Room to Keep Filling</div>
+      </div>
+    </div>
+
+    <!-- Pair 2 -->
+    <div class="ba-pair reveal">
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_8ce49519d27444f59f461472b65dba26~mv2.webp" alt="Before — full construction dumpster">
+        <div class="ba-label before">↑ Before — Full &amp; Overflowing</div>
+      </div>
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_2c08b331859a4a9a902e3ca48afdb001~mv2.webp" alt="After — compacted">
+        <div class="ba-label after">↓ After — Massive Capacity Restored</div>
+      </div>
+    </div>
+
+    <!-- Pair 3 -->
+    <div class="ba-pair reveal">
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_114495eee63c448ba05fdcecb41626bd~mv2.webp" alt="Before — overflowing debris">
+        <div class="ba-label before">↑ Before — Ready to Call for Haul</div>
+      </div>
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_b9f6eaebf03e4c4083b8ce793f766999~mv2.webp" alt="After — compacted, space restored">
+        <div class="ba-label after">↓ After — Haul Cancelled, Savings Kept</div>
+      </div>
+    </div>
+
+    <!-- Pair 4 -->
+    <div class="ba-pair reveal">
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_e5c3fadc225d4944b207b647f3fe18f0~mv2.jpg" alt="Before — overflowing construction waste">
+        <div class="ba-label before">↑ Before — Full &amp; Overflowing</div>
+      </div>
+      <div class="ba-img">
+        <img src="https://static.wixstatic.com/media/2b04d8_7d457b62298541b684c050f046966102~mv2.jpeg" alt="After — compacted with room">
+        <div class="ba-label after">↓ After — Back in Business</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Action shot full-width -->
+  <div class="action-shot reveal">
+    <img src="https://static.wixstatic.com/media/2b04d8_3b3579337cc843d5889dfaba8e2ac8ef~mv2.jpeg" alt="Dumpster Crunchers truck and compactor in action on a job site">
+    <div class="action-shot-text">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Our Equipment In Action</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(34px,5vw,62px);text-transform:uppercase;line-height:.95;color:var(--white);max-width:580px;">We Arrive. We Crunch. We're Gone.</div>
+      <p style="font-size:16px;color:rgba(255,255,255,.65);margin-top:16px;max-width:440px;line-height:1.6;">In minutes, your overflowing dumpster is transformed back to far more usable capacity — with no mess and no damage to your bins.</p>
+    </div>
+  </div>
+
+  <div class="gallery-cta reveal">
+    <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="btn-primary">Book a Free Demo — See It Yourself</a>
+    <p>Zero commitment. <strong>We prove it before you pay anything.</strong></p>
+  </div>
+</section>
+
+<!-- SAVINGS CALC -->
+<section class="calc-section" id="savings">
+  <div class="section-eyebrow reveal">Run Your Numbers</div>
+  <h2 class="section-title reveal">How Much Will<br><span style="color:var(--orange)">You</span> Save?</h2>
+  <div class="calc-layout">
+    <div class="calc-box reveal">
+      <div class="calc-row">
+        <label>Hauls per month</label>
+        <input type="range" id="hauls" min="2" max="30" value="8" oninput="calcSavings()">
+        <div class="calc-val" id="haulsVal">8 hauls</div>
+      </div>
+      <div class="calc-row">
+        <label>Cost per haul ($)</label>
+        <input type="range" id="cost" min="100" max="800" value="350" step="25" oninput="calcSavings()">
+        <div class="calc-val" id="costVal">$350</div>
+      </div>
+      <div class="calc-row">
+        <label>Estimated haul reduction</label>
+        <input type="range" id="reduction" min="20" max="60" value="50" oninput="calcSavings()">
+        <div class="calc-val" id="reductionVal">50% — cut in half</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="result-main">
+        <div class="result-eyebrow">Estimated Monthly Savings</div>
+        <div class="result-num" id="savingsResult">$1,400</div>
+        <div class="result-sub">hauls you no longer need to schedule</div>
+      </div>
+      <div class="result-annual">
+        <span class="result-annual-label">Annual Savings</span>
+        <span class="result-annual-num" id="annualResult">$16,800</span>
+      </div>
+      <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="btn-primary" style="width:100%;text-align:center;display:block;margin-top:16px;padding:18px;">Get My Free Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials-section" id="materials">
+  <div class="section-eyebrow reveal">All Material Types</div>
+  <h2 class="section-title reveal">What We Crunch</h2>
+  <div class="materials-grid">
+    <div class="material-card reveal"><div class="mat-icon">🗑️</div><div class="mat-name">General Trash &amp; Waste</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🧱</div><div class="mat-name">Construction Materials</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🌿</div><div class="mat-name">Landscaping Debris</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🪵</div><div class="mat-name">Wood, Pallets &amp; Cardboard</div></div>
+    <div class="material-card reveal"><div class="mat-icon">♻️</div><div class="mat-name">Plastic Materials</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🪟</div><div class="mat-name">Glass &amp; Carpet</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🏗️</div><div class="mat-name">Building Materials</div></div>
+    <div class="material-card reveal"><div class="mat-icon">🛋️</div><div class="mat-name">Appliances &amp; Furniture</div></div>
+  </div>
+</section>
+
+<!-- SERVICE AREA -->
+<section class="area-section" id="area">
+  <div class="section-eyebrow reveal">Where We Operate</div>
+  <h2 class="section-title reveal">Denver Metro<br>Service Area</h2>
+  <div class="area-layout">
+    <div class="area-list reveal">
+      <div class="area-item">Denver</div><div class="area-item">Aurora</div>
+      <div class="area-item">Parker</div><div class="area-item">Lakewood</div>
+      <div class="area-item">Littleton</div><div class="area-item">Golden</div>
+      <div class="area-item">Arvada</div><div class="area-item">Castle Rock</div>
+    </div>
+    <div class="reveal">
+      <div class="hours-block">
+        <h3>Crunching Hours</h3>
+        <div class="hour-row"><span class="hour-day">Monday – Friday</span><span class="hour-time">7:00 AM – 6:00 PM</span></div>
+        <div class="hour-row"><span class="hour-day">Saturday</span><span class="hour-time">9:00 AM – 4:00 PM</span></div>
+        <div class="hour-row"><span class="hour-day">Sunday</span><span class="hour-time">9:00 AM – 4:00 PM</span></div>
+        <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="btn-primary" style="margin-top:40px;display:inline-block;">Schedule Service</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2 class="reveal">Stop Paying for<br><span class="co">Hauls You</span><br><span class="cb">Don't Need.</span></h2>
+  <p class="cta-sub reveal">Book a free demo. We'll prove the savings before you spend a dollar.</p>
+  <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="btn-cta reveal">Book My Free Demo Today →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="https://static.wixstatic.com/media/2b04d8_61afd7d07fc54c8fa52093956743a578~mv2.jpg" alt="Dumpster Crunchers">
+  </div>
+  <p>© 2025 Dumpster Crunchers · Denver Metro Area</p>
+  <div class="footer-links">
+    <a href="https://www.dumpstercrunchers.com">Privacy Policy</a>
+    <span>|</span>
+    <a href="https://www.dumpstercrunchers.com/general-9">Terms &amp; Conditions</a>
+  </div>
+</footer>
+
+<script>
+  function calcSavings() {
+    const hauls = parseInt(document.getElementById('hauls').value);
+    const cost = parseInt(document.getElementById('cost').value);
+    const reduction = parseInt(document.getElementById('reduction').value);
+    document.getElementById('haulsVal').textContent = hauls + ' hauls';
+    document.getElementById('costVal').textContent = '$' + cost;
+    document.getElementById('reductionVal').textContent = reduction + '%' + (reduction >= 50 ? ' — cut in half' : '');
+    const monthly = Math.round(hauls * cost * (reduction / 100));
+    document.getElementById('savingsResult').textContent = '$' + monthly.toLocaleString();
+    document.getElementById('annualResult').textContent = '$' + (monthly * 12).toLocaleString();
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), 60); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
