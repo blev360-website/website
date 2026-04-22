@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dumpster Crunchers · Haul Cost Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --green: #c8f54a;
+    --green-dark: #a8d832;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+    --text: #e8e8e8;
+    --muted: #888;
+    --red: #ff5c5c;
+    --border: #333;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 7vw, 52px);
+    letter-spacing: 3px;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .calculator {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 640px) {
+    .calculator { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .panel.current::before { background: var(--red); }
+  .panel.withdc::before { background: var(--green); }
+
+  .panel-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .panel.current .panel-label { color: var(--red); }
+  .panel.withdc .panel-label { color: var(--green); }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(20px, 4vw, 28px);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .field {
+    margin-bottom: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    background: var(--gray2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus {
+    border-color: var(--green);
+  }
+
+  .prefix-wrap {
+    position: relative;
+  }
+
+  .prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .prefix-wrap input { padding-left: 26px; }
+
+  .suffix {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .result-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .result-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  .panel.current .result-value { color: var(--red); }
+  .panel.withdc .result-value { color: var(--green); }
+
+  .hero-result {
+    background: var(--gray2);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .hero-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 52px);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+
+  .panel.current .hero-number { color: var(--red); }
+  .panel.withdc .hero-number { color: var(--green); }
+
+  .hero-unit {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Comparison banner */
+  .comparison {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #1a2200 0%, #1a1a1a 100%);
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cmp-block { text-align: center; flex: 1; min-width: 120px; }
+
+  .cmp-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .cmp-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    letter-spacing: 1px;
+  }
+
+  .cmp-divider {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--border);
+  }
+
+  .savings-block {
+    text-align: center;
+    flex: 1.5;
+    min-width: 160px;
+    background: rgba(200, 245, 74, 0.08);
+    border: 1px solid rgba(200, 245, 74, 0.25);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .savings-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  .savings-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 7vw, 48px);
+    color: var(--green);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .savings-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .hidden { display: none; }
+
+  .note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(200,245,74,0.15);
+    color: var(--green);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Dumpster Crunchers</div>
+  <div class="tagline">Haul Cost Calculator</div>
+</header>
+
+<div class="calculator">
+
+  <!-- PANEL 1: Current (without DC) -->
+  <div class="panel current">
+    <div class="panel-label">Without Dumpster Crunchers</div>
+    <div class="panel-title">What You're Actually Paying Per Ton</div>
+
+    <div class="field">
+      <label>Haul Rate</label>
+      <div class="prefix-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="c_haul" placeholder="450" min="0" step="1" oninput="calcCurrent()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tons Included in Rate</label>
+      <div class="prefix-wrap">
+        <input type="number" id="c_tons_allowed" placeholder="3" min="0" step="0.1" oninput="calcCurrent()">
+        <span class="suffix">tons</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Overage Rate (per ton over)</label>
+      <div class="prefix-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="c_overage_rate" placeholder="75" min="0" step="1" oninput="calcCurrent()">
+        <span class="suffix">/ ton</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Actual Tons Dumped (from report)</label>
+      <div class="prefix-wrap">
+        <input type="number" id="c_actual_tons" placeholder="1.5" min="0" step="0.1" oninput="calcCurrent()">
+        <span class="suffix">tons</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="result-row">
+      <span class="result-label">Overage Charge</span>
+      <span class="result-value" id="c_overage_charge">—</span>
+    </div>
+    <div class="result-row">
+      <span class="result-label">Total Haul Cost</span>
+      <span class="result-value" id="c_total_cost">—</span>
+    </div>
+
+    <div class="hero-result">
+      <div class="hero-label">True Cost Per Ton</div>
+      <div class="hero-number" id="c_cpp">—</div>
+      <div class="hero-unit">per ton hauled</div>
+    </div>
+
+    <p class="note" id="c_note"></p>
+  </div>
+
+  <!-- PANEL 2: With Dumpster Crunchers -->
+  <div class="panel withdc">
+    <div class="panel-label">With Dumpster Crunchers</div>
+    <div class="panel-title">One Haul. More Tons. Better Math.</div>
+
+    <div class="badge">Compacted Model</div>
+
+    <div class="field">
+      <label>Dumpster Crunchers Fee</label>
+      <div class="prefix-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="d_fee" placeholder="212" min="0" step="1" oninput="calcDC()">
+        <span class="suffix">/ service</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Haul Rate (same hauler)</label>
+      <div class="prefix-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="d_haul" placeholder="450" min="0" step="1" oninput="calcDC()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tons Included in Rate</label>
+      <div class="prefix-wrap">
+        <input type="number" id="d_tons_allowed" placeholder="3" min="0" step="0.1" oninput="calcDC()">
+        <span class="suffix">tons</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Overage Rate (per ton over)</label>
+      <div class="prefix-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="d_overage_rate" placeholder="75" min="0" step="1" oninput="calcDC()">
+        <span class="suffix">/ ton</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Actual Tons Dumped (compacted haul)</label>
+      <div class="prefix-wrap">
+        <input type="number" id="d_actual_tons" placeholder="4" min="0" step="0.1" oninput="calcDC()">
+        <span class="suffix">tons</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="result-row">
+      <span class="result-label">Overage Charge</span>
+      <span class="result-value" id="d_overage_charge">—</span>
+    </div>
+    <div class="result-row">
+      <span class="result-label">Total All-In Cost</span>
+      <span class="result-value" id="d_total_cost">—</span>
+    </div>
+
+    <div class="hero-result">
+      <div class="hero-label">True Cost Per Ton</div>
+      <div class="hero-number" id="d_cpp">—</div>
+      <div class="hero-unit">per ton hauled</div>
+    </div>
+
+    <p class="note" id="d_note"></p>
+  </div>
+
+  <!-- COMPARISON BANNER -->
+  <div class="comparison" id="comparison_row" style="display:none;">
+    <div class="cmp-block">
+      <div class="cmp-label">Without DC</div>
+      <div class="cmp-val" style="color:var(--red);" id="cmp_without">—</div>
+      <div style="font-size:11px;color:var(--muted);">per ton</div>
+    </div>
+
+    <div class="cmp-divider">→</div>
+
+    <div class="cmp-block">
+      <div class="cmp-label">With DC</div>
+      <div class="cmp-val" style="color:var(--green);" id="cmp_with">—</div>
+      <div style="font-size:11px;color:var(--muted);">per ton</div>
+    </div>
+
+    <div class="cmp-divider">→</div>
+
+    <div class="savings-block">
+      <div class="savings-label">You Save</div>
+      <div class="savings-val" id="cmp_savings">—</div>
+      <div class="savings-sub" id="cmp_pct"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentCPP = null;
+  let dcCPP = null;
+
+  function fmt(n) {
+    if (isNaN(n) || !isFinite(n)) return '—';
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calcCurrent() {
+    const haul = parseFloat(document.getElementById('c_haul').value) || 0;
+    const allowed = parseFloat(document.getElementById('c_tons_allowed').value) || 0;
+    const overageRate = parseFloat(document.getElementById('c_overage_rate').value) || 0;
+    const actual = parseFloat(document.getElementById('c_actual_tons').value);
+
+    if (!haul || isNaN(actual) || actual <= 0) {
+      document.getElementById('c_overage_charge').textContent = '—';
+      document.getElementById('c_total_cost').textContent = '—';
+      document.getElementById('c_cpp').textContent = '—';
+      document.getElementById('c_note').textContent = '';
+      currentCPP = null;
+      updateComparison();
+      return;
+    }
+
+    const overTons = Math.max(0, actual - allowed);
+    const overageCharge = overTons * overageRate;
+    const total = haul + overageCharge;
+    const cpp = total / actual;
+
+    document.getElementById('c_overage_charge').textContent = fmt(overageCharge);
+    document.getElementById('c_total_cost').textContent = fmt(total);
+    document.getElementById('c_cpp').textContent = fmt(cpp);
+
+    if (actual < allowed) {
+      const unused = allowed - actual;
+      document.getElementById('c_note').textContent =
+        `⚠ You're leaving ${unused.toFixed(2)} ton${unused !== 1 ? 's' : ''} of paid capacity on the table.`;
+    } else if (overTons > 0) {
+      document.getElementById('c_note').textContent =
+        `⚠ ${overTons.toFixed(2)} ton${overTons !== 1 ? 's' : ''} over the included limit at ${fmt(overageRate)}/ton.`;
+    } else {
+      document.getElementById('c_note').textContent = '';
+    }
+
+    currentCPP = cpp;
+    updateComparison();
+  }
+
+  function calcDC() {
+    const fee = parseFloat(document.getElementById('d_fee').value) || 0;
+    const haul = parseFloat(document.getElementById('d_haul').value) || 0;
+    const allowed = parseFloat(document.getElementById('d_tons_allowed').value) || 0;
+    const overageRate = parseFloat(document.getElementById('d_overage_rate').value) || 0;
+    const actual = parseFloat(document.getElementById('d_actual_tons').value);
+
+    if ((!haul && !fee) || isNaN(actual) || actual <= 0) {
+      document.getElementById('d_overage_charge').textContent = '—';
+      document.getElementById('d_total_cost').textContent = '—';
+      document.getElementById('d_cpp').textContent = '—';
+      document.getElementById('d_note').textContent = '';
+      dcCPP = null;
+      updateComparison();
+      return;
+    }
+
+    const overTons = Math.max(0, actual - allowed);
+    const overageCharge = overTons * overageRate;
+    const total = fee + haul + overageCharge;
+    const cpp = total / actual;
+
+    document.getElementById('d_overage_charge').textContent = fmt(overageCharge);
+    document.getElementById('d_total_cost').textContent = fmt(total);
+    document.getElementById('d_cpp').textContent = fmt(cpp);
+
+    if (overTons > 0) {
+      document.getElementById('d_note').textContent =
+        `${overTons.toFixed(2)} ton${overTons !== 1 ? 's' : ''} over included limit — but still one haul.`;
+    } else {
+      document.getElementById('d_note').textContent = '';
+    }
+
+    dcCPP = cpp;
+    updateComparison();
+  }
+
+  function updateComparison() {
+    const row = document.getElementById('comparison_row');
+
+    if (currentCPP === null || dcCPP === null) {
+      row.style.display = 'none';
+      return;
+    }
+
+    row.style.display = 'flex';
+    document.getElementById('cmp_without').textContent = fmt(currentCPP);
+    document.getElementById('cmp_with').textContent = fmt(dcCPP);
+
+    const savingsPerTon = currentCPP - dcCPP;
+    const pct = (savingsPerTon / currentCPP * 100);
+
+    if (savingsPerTon > 0) {
+      document.getElementById('cmp_savings').textContent = fmt(savingsPerTon) + '/ton';
+      document.getElementById('cmp_pct').textContent = `${Math.round(pct)}% less per ton with DC`;
+      document.getElementById('cmp_savings').style.color = 'var(--green)';
+    } else {
+      const loss = Math.abs(savingsPerTon);
+      document.getElementById('cmp_savings').textContent = '+' + fmt(loss) + '/ton';
+      document.getElementById('cmp_pct').textContent = `DC costs more per ton here — adjust inputs`;
+      document.getElementById('cmp_savings').style.color = 'var(--red)';
+    }
+  }
+</script>
+</body>
+</html>
