@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Agreement | Dumpster Crunchers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #060f1c;
+      --orange: #f97316;
+      --blue: #3b82f6;
+      --white: #ffffff;
+      --light: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #1e2d42;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: var(--navy);
+      border-bottom: 3px solid var(--orange);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      background: var(--orange);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-mark svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--navy);
+    }
+
+    .header-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .header-text p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-top: 2px;
+    }
+
+    .header-contact {
+      margin-left: auto;
+      text-align: right;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .header-contact a {
+      color: var(--orange);
+      text-decoration: none;
+    }
+
+    /* Hero banner */
+    .hero {
+      background: linear-gradient(135deg, #0d1f35 0%, var(--navy) 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 40px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .hero h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: 3px;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 span {
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+
+    .effective-badge {
+      display: inline-block;
+      background: rgba(249,115,22,0.12);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--orange);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px 100px;
+    }
+
+    /* Table of contents */
+    .toc {
+      background: #0d1f35;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--orange);
+      padding: 28px 32px;
+      margin-bottom: 56px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .toc-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 32px;
+    }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc a:hover { color: var(--orange); }
+
+    .toc a::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .toc a:hover::before { background: var(--orange); }
+
+    /* Sections */
+    .section {
+      margin-bottom: 52px;
+      scroll-margin-top: 100px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--orange);
+      min-width: 28px;
+    }
+
+    .section h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .section p {
+      font-size: 15px;
+      color: #c8d4e0;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* Highlight box for Additional Charges */
+    .highlight-box {
+      background: rgba(249,115,22,0.07);
+      border: 1px solid rgba(249,115,22,0.25);
+      border-left: 4px solid var(--orange);
+      padding: 20px 24px;
+      border-radius: 0 4px 4px 0;
+      margin-top: 4px;
+    }
+
+    .highlight-box p {
+      color: #d4c4b0;
+      font-size: 14px;
+    }
+
+    /* Notices section */
+    .notices-block {
+      background: #0d1f35;
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      border-radius: 4px;
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .notice-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .notice-col p {
+      font-size: 14px;
+      color: #c8d4e0;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .notice-col a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    /* Acceptance banner */
+    .acceptance {
+      background: #0d1f35;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--orange);
+      padding: 32px 36px;
+      border-radius: 4px;
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .acceptance h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .acceptance p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .acceptance p strong {
+      color: var(--orange);
+    }
+
+    /* Footer */
+    footer {
+      background: #050c16;
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    footer a { color: var(--orange); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header { padding: 20px; flex-wrap: wrap; }
+      .header-contact { width: 100%; text-align: left; margin-top: 8px; }
+      .hero { padding: 40px 20px; }
+      .container { padding: 40px 20px 80px; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .notices-block { flex-direction: column; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="8" width="24" height="18" rx="2"/>
+      <rect x="10" y="4" width="12" height="6" rx="1"/>
+      <rect x="13" y="14" width="6" height="8" rx="1" fill="white" opacity="0.3"/>
+      <path d="M10 18 L16 12 L22 18" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="header-text">
+    <h1>Dumpster Crunchers</h1>
+    <p>Mobile Compaction Service · Denver Metro</p>
+  </div>
+  <div class="header-contact">
+    <a href="tel:7204027799">720.402.7799</a><br>
+    <a href="http://dumpstercrunchers.com">dumpstercrunchers.com</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Legal · Service Terms</div>
+  <h2>Service Agreement<br><span>Terms & Conditions</span></h2>
+  <div class="hero-sub">Commercial Waste Hauling and Disposal Service</div>
+  <div class="effective-badge">Effective 2025 · All Service Proposals</div>
+</div>
+
+<div class="container">
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <div class="toc-grid">
+      <a href="#service-performance">Service Performance</a>
+      <a href="#additional-charges">Additional Charges</a>
+      <a href="#term-pricing">Term and Pricing</a>
+      <a href="#equipment">Equipment</a>
+      <a href="#waste-material">Waste Material</a>
+      <a href="#payment">Payment</a>
+      <a href="#inspection">Inspection & Rejection</a>
+      <a href="#assignment">Assignment</a>
+      <a href="#performance">Performance of Services</a>
+      <a href="#liability">Limitation of Liability</a>
+      <a href="#volume-weight">Volume and Weight</a>
+      <a href="#indemnification">Indemnification</a>
+      <a href="#service-interruptions">Service Interruptions</a>
+      <a href="#miscellaneous">Miscellaneous</a>
+    </div>
+  </div>
+
+  <div class="section" id="service-performance">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h3>Service Performance</h3>
+    </div>
+    <p>Dumpster Crunchers, LLC ("Dumpster Crunchers") will provide waste hauling and disposal service for our commercial Customers ("Customer"). Management of the services provided and responsibilities of Dumpster Crunchers and its Customers are governed by the terms of this Agreement and any additional terms reflected in a written and signed Proposal from Dumpster Crunchers ("Proposal"), without regard to a Customer's purchase order, or any other Agreement written or verbal that may exist between the parties, until and unless a different Agreement is reduced to writing and signed by both parties. Customer's acceptance of a Proposal from Dumpster Crunchers constitutes acknowledgement, understanding and acceptance of these Terms and Conditions.</p>
+  </div>
+
+  <div class="section" id="term-pricing">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h3>Term and Pricing</h3>
+    </div>
+    <p>The term, if any, and the list of services agreed upon including pricing are specified in the associated Proposal document. The Proposal and these Terms and Conditions together shall constitute the Agreement between Dumpster Crunchers and Customer ("Agreement"). If additional services are contemplated during the course of the execution of the Proposal, they will be priced and documented separately. Unless pricing is set for a term in the Proposal, Dumpster Crunchers reserves the right to change pricing at any time upon 30 days written or verbal notice to Customer. Except as otherwise stated in the Proposal, both Customer and Dumpster Crunchers have the right to stop services at any time for any reason. When services stop, for any reason, Dumpster Crunchers shall have the immediate right to conclude any scheduled service and Customer shall cooperate as necessary to facilitate that conclusion.</p>
+  </div>
+
+  <div class="section" id="waste-material">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h3>Waste Material</h3>
+    </div>
+    <p>Unless expressly agreed upon in writing in the Proposal, Dumpster Crunchers does not haul hazardous waste materials. Customer may not deposit any waste that is liquid, or any waste that is or contains radioactive, volatile, corrosive, highly flammable, explosive, biomedical, biohazardous, infectious, toxic or hazardous waste or substances ("Prohibited Waste") into any container serviced by Dumpster Crunchers.</p>
+    <p>Prohibited Waste includes, but is not limited to: tires, highly flammable or explosive materials, toxic or biohazardous materials, medical waste, radioactive materials, white goods and appliances containing freon (including refrigerators, freezers, air conditioners, and dehumidifiers), e-Waste, smoke detectors, paint, oil, hazardous chemicals, mattresses, and box springs, and any other materials which are otherwise illegal, dangerous and/or unsafe. The purpose of Dumpster Crunchers' standard service is solely to haul and dispose of Customer's non-hazardous and non-toxic solid waste.</p>
+  </div>
+
+  <div class="section" id="inspection">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h3>Inspection and Rejection of Prohibited Waste</h3>
+    </div>
+    <p>Dumpster Crunchers shall have the right to inspect, assess, or photograph any container prior to or during service. If any container is reasonably believed to contain Prohibited Waste, Dumpster Crunchers may, at its option, decline to service the container on that visit. Title to and liability for Prohibited Waste shall remain with Customer at all times. Customer shall indemnify, hold harmless and reimburse Dumpster Crunchers for all costs, damages, fines, and third-party expenses incurred as a result of or relating to Customer's deposit of Prohibited Waste in any serviced container, including costs of inspection, testing, remediation, and analysis.</p>
+  </div>
+
+  <div class="section" id="performance">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h3>Performance of Services</h3>
+    </div>
+    <p>Dumpster Crunchers will arrange for the collection and proper disposal of waste materials on a scheduled and mutually agreed basis in accordance with applicable State, Federal, Local, EPA and RCRA regulations. Dumpster Crunchers will use the best available method of disposal, including but not limited to recycling, composting, landfill, or other lawful disposal methods. Dumpster Crunchers may subcontract hauling and disposal obligations to qualified third-party providers at its discretion, provided that Dumpster Crunchers remains responsible to Customer for the overall quality and delivery of services.</p>
+  </div>
+
+  <div class="section" id="volume-weight">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h3>Volume and Weight</h3>
+    </div>
+    <p>State law governs gross vehicle weight. Customer agrees to pay for any overweight charges imposed by applicable authorities or disposal facilities. Disposal charges are directly related to weight. Customer's use of Dumpster Crunchers' service includes the cost of hauling and disposal of the tonnage specified in the Proposal. Containers may not be filled above the top edge. Dumpster Crunchers reserves the right to refuse hauling of containers filled over the top or containers that exceed legal weight limits, and reserves the right to terminate service if Customer does not abide by these regulations.</p>
+  </div>
+
+  <div class="section" id="service-interruptions">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h3>Service Interruptions and Site Access</h3>
+    </div>
+    <p>If a container is overloaded, overweight, inaccessible, blocked, or if any other condition beyond Dumpster Crunchers' control prevents completion of service upon arrival, a Trip Charge shall apply. Customer is responsible for ensuring clear and safe access to all containers on scheduled service days. Delays at the request of the Customer once Dumpster Crunchers has arrived on site are billable items subject to Additional Charges.</p>
+  </div>
+
+  <div class="section" id="additional-charges">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h3>Additional Charges</h3>
+    </div>
+    <div class="highlight-box">
+      <p>Customer acknowledges and agrees that the hauling fee stated in the Proposal covers only the base cost of scheduled waste hauling and disposal service as described therein. Any charges assessed beyond the agreed hauling fee — including but not limited to overweight fees, disposal surcharges, fuel surcharges, permit fees, Prohibited Waste remediation costs, Trip Charges, wait time, landfill gate fees, or any other extraordinary costs incurred by Dumpster Crunchers in the performance of services for Customer — are the sole responsibility of Customer and will be invoiced separately. Dumpster Crunchers will make reasonable efforts to notify Customer of anticipated Additional Charges in advance where practicable, but Customer's obligation to pay such charges is not contingent upon advance notice.</p>
+    </div>
+  </div>
+
+  <div class="section" id="equipment">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h3>Equipment</h3>
+    </div>
+    <p>All containers and equipment used to provide service to the Customer are and shall remain the property of Dumpster Crunchers or its service providers. Customer agrees to provide Dumpster Crunchers with access to its containers at all reasonable times in order to provide service, over surfaces that can sustain the weight and operation of Dumpster Crunchers' trucks and containers. Customer acknowledges that Dumpster Crunchers shall not be liable for any damage to driving surfaces or container placement surfaces resulting from trucks serving containers on the agreed upon areas. Customer will not file any lien, nor allow any lien to be filed by others, against any Dumpster Crunchers equipment or containers.</p>
+  </div>
+
+  <div class="section" id="payment">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h3>Payment</h3>
+    </div>
+    <p>Customer agrees to pay Dumpster Crunchers' invoices upon receipt unless Customer has been extended credit by Dumpster Crunchers. If credit is extended, all invoices shall be paid by Customer within 30 days of the invoice date. Customer agrees that any account unpaid past 30 days from invoice is subject to a late fee of 1.5% per month of the outstanding balance, which shall continue until the balance is paid in full. Should Dumpster Crunchers be forced to initiate collection action against a Customer's account, Customer agrees to pay Dumpster Crunchers' reasonable costs of collection, attorney fees, and court costs. The amount of any and all applicable taxes shall be added to the price and paid by the Customer unless Customer has provided Dumpster Crunchers with valid exemption certificates acceptable to the applicable taxing authorities.</p>
+  </div>
+
+  <div class="section" id="assignment">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h3>Assignment</h3>
+    </div>
+    <p>Customer may not assign this Agreement without the prior written consent of Dumpster Crunchers. Dumpster Crunchers may assign or subcontract its obligations under this Agreement without Customer's consent, provided service quality is maintained.</p>
+  </div>
+
+  <div class="section" id="liability">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h3>Limitation of Liability</h3>
+    </div>
+    <p>Customer agrees that they are the generators of the waste. As such, ownership of and all responsibility for any and all possible liability for direct, secondary or consequential damage related to the waste remain with Customer during and after transport by Dumpster Crunchers. Dumpster Crunchers provides hauling and disposal of Customer's waste material only. Dumpster Crunchers' aggregate liability, if any, arising under the execution of services to the Customer is limited to the amount of service fees received by Dumpster Crunchers for the individual service visit giving rise to the claim. In no event will Dumpster Crunchers have responsibility for any special, indirect, incidental, consequential, exemplary, or punitive damages, loss of profits or revenue, or loss of use, even if informed of the possibility of such damages. To the extent permitted by applicable law, these exclusions and limitations will apply regardless of whether liability arises from breach of contract, warranty, tort (including but not limited to negligence), by operation of law, or otherwise.</p>
+  </div>
+
+  <div class="section" id="indemnification">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <h3>Indemnification, Attorney Fees & Collection Costs</h3>
+    </div>
+    <p>Customer shall indemnify Dumpster Crunchers, LLC for all costs and damages suffered by Dumpster Crunchers as a result of the Customer's actual or threatened breach of this Agreement, including any liability arising from Prohibited Waste, site conditions, or misrepresentation of waste contents. In addition to all other legal and equitable remedies, in the event it becomes necessary for Dumpster Crunchers to enforce the terms of this Agreement, including but not limited to any action to collect sums due hereunder, Dumpster Crunchers shall be entitled to an award of its reasonable attorney's fees, litigation expenses, and costs of collection.</p>
+  </div>
+
+  <div class="section" id="miscellaneous">
+    <div class="section-header">
+      <span class="section-num">14</span>
+      <h3>Miscellaneous</h3>
+    </div>
+    <p>These Terms and Conditions together with any Proposal or Proposals associated with them and agreed to by the parties constitute the entire Agreement between the parties, and supersede any and all prior Agreements and arrangements, whether oral or written, between the parties. No modification of this Agreement shall be binding unless in writing and signed by both parties. This Agreement shall be construed in accordance with the laws of the State of Colorado, excluding its choice of law provisions. The failure of either party to insist upon the performance of any provision of this Agreement will not be considered a waiver of that provision, and the provision will continue in full force and effect. If any provision is found to be illegal, invalid or otherwise unenforceable by any judicial or administrative body, the other provisions will not be affected and will remain in force and effect. Provisions herein which by their very nature are intended to survive termination or cancellation of this Agreement will survive such termination or cancellation. Any notice to be given by one party to the other will be considered properly given if deposited in the United States Mail, postage prepaid, "Certified Mail, Return Receipt Requested," addressed to the party at the address identified in the associated Proposal.</p>
+  </div>
+
+  <div class="section" id="notices">
+    <div class="section-header">
+      <span class="section-num">15</span>
+      <h3>Notices</h3>
+    </div>
+    <div class="notices-block">
+      <div class="notice-col">
+        <h4>Dumpster Crunchers, LLC</h4>
+        <p>
+          9333 Middle Fork St<br>
+          Littleton, CO 80125<br>
+          <a href="tel:7204027799">720.402.7799</a><br>
+          <a href="http://dumpstercrunchers.com">dumpstercrunchers.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="acceptance">
+    <h4>Acceptance of Terms</h4>
+    <p>By accepting any Proposal from Dumpster Crunchers, LLC — whether by written approval, email confirmation, or authorization to proceed — Customer agrees to be bound by these <strong>Terms and Conditions</strong> in their entirety.</p>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Dumpster Crunchers, LLC &nbsp;·&nbsp; Littleton, CO &nbsp;·&nbsp;
+  <a href="tel:7204027799">720.402.7799</a> &nbsp;·&nbsp;
+  <a href="http://dumpstercrunchers.com">dumpstercrunchers.com</a>
+</footer>
+
+</body>
+</html>
