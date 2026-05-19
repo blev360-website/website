@@ -22,6 +22,9 @@
       --white: #f5f5f5;
       --muted: #888;
       --green: #22c55e;
+      --blue: #39b8ff;
+      --blue-dim: rgba(57,184,255,0.12);
+      --blue-border: rgba(57,184,255,0.3);
     }
 
     html { scroll-behavior: smooth; }
@@ -78,9 +81,9 @@
     }
     .hero .eyebrow {
       display: inline-block;
-      background: rgba(249,115,22,0.12);
-      border: 1px solid rgba(249,115,22,0.3);
-      color: var(--orange);
+      background: var(--blue-dim);
+      border: 1px solid var(--blue-border);
+      color: var(--blue);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 2px;
@@ -99,7 +102,7 @@
     }
     .hero h1 em {
       font-style: normal;
-      color: var(--orange);
+      color: var(--blue);
     }
     .hero p {
       font-size: 18px;
@@ -142,7 +145,7 @@
       gap: 8px;
       transition: border-color 0.2s, background 0.2s;
     }
-    .btn-secondary:hover { border-color: #555; background: #1a1a1a; }
+    .btn-secondary:hover { border-color: var(--blue); background: rgba(57,184,255,0.06); }
 
     /* TRUST BAR */
     .trust-bar {
@@ -154,7 +157,7 @@
       align-items: center;
       gap: 40px;
       flex-wrap: wrap;
-      background: var(--dark);
+      background: #0a1520;
     }
     .trust-item {
       display: flex;
@@ -164,7 +167,7 @@
       color: #888;
       font-weight: 500;
     }
-    .trust-item .icon { font-size: 18px; }
+    .trust-item .icon { font-size: 18px; color: var(--blue); }
 
     /* SECTION */
     section { padding: 72px 24px; }
@@ -205,7 +208,7 @@
       padding: 28px 24px;
       transition: border-color 0.2s;
     }
-    .card:hover { border-color: #444; }
+    .card:hover { border-color: var(--blue); }
     .card .icon { font-size: 28px; margin-bottom: 16px; }
     .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--white); }
     .card p { font-size: 14px; color: #888; line-height: 1.6; }
@@ -218,16 +221,16 @@
       gap: 20px;
       align-items: flex-start;
       padding: 28px 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(57,184,255,0.1);
     }
     .step:last-child { border-bottom: none; }
     .step-num {
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: rgba(249,115,22,0.1);
-      border: 1px solid rgba(249,115,22,0.3);
-      color: var(--orange);
+      background: var(--blue-dim);
+      border: 1px solid var(--blue-border);
+      color: var(--blue);
       font-family: 'Bebas Neue', sans-serif;
       font-size: 22px;
       display: flex;
@@ -280,7 +283,7 @@
       transition: border-color 0.2s;
       appearance: none;
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--orange); }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
     input::placeholder, textarea::placeholder { color: #555; }
     select option { background: #111; }
     textarea { resize: vertical; min-height: 100px; }
@@ -355,7 +358,7 @@
 <!-- HERO -->
 <div class="hero">
   <span class="eyebrow">Commercial Waste Hauling · Denver Metro</span>
-  <h1>Tired of<br><em>Surprise</em><br>Haul Bills?</h1>
+  <h1>Tired of<br><em style="color: var(--blue)">Surprise</em><br>Haul Bills?</h1>
   <p>Dumpster Crunchers manages your commercial waste hauling — flat-rate pricing, reliable pickups, zero hidden fees. One call and we handle everything.</p>
   <div class="hero-ctas">
     <a href="#get-quote" class="btn-primary">Get a Free Quote →</a>
@@ -415,7 +418,7 @@
 <!-- HOW IT WORKS -->
 <section style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="section-inner">
-    <p class="section-label">How It Works</p>
+    <p class="section-label" style="color: var(--blue)">How It Works</p>
     <h2>Simple From Day One</h2>
     <p class="subtitle">We've made switching haulers — or getting started — as painless as possible.</p>
     <div class="steps">
