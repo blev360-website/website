@@ -72,6 +72,7 @@
   .nav-phone span { color: var(--orange); }
   .nav-cta { background: var(--orange); color: var(--white); padding: 11px 22px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
   .nav-cta:hover { background: var(--orange-light); }
+  .nav-hauling-mobile { display: none; }
 
   /* HERO */
   .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 420px; gap: 64px; align-items: center; padding: 180px 52px 88px; position: relative; overflow: hidden; }
@@ -287,6 +288,7 @@
   @media (max-width: 960px) {
     nav { padding: 8px 20px; }
     .nav-links, .nav-phone { display: none; }
+    .nav-hauling-mobile { display: inline-block; background: var(--orange); color: var(--white); padding: 8px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
     .hero { grid-template-columns: 1fr; padding: 180px 24px 64px; gap: 40px; }
     .hero-ghost { display: none; }
     .hero-stats { gap: 28px; }
@@ -332,6 +334,7 @@
       <li><a href="#area">Service Area</a></li>
     </ul>
     <a href="tel:7209731391" class="nav-phone"><span>📞</span> (720) 973-1391</a>
+    <a href="/hauling.html" class="nav-hauling-mobile">Hauling</a>
     <a href="https://clienthub.getjobber.com/hubs/efb223c6-2910-4a8d-8acd-e96815f5eeb5/public/requests/2112688/new" class="nav-cta">Free Demo</a>
   </div>
 </nav>
