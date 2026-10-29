@@ -533,3 +533,10 @@ footer{border-top:3px solid var(--blue)}
 
 /*CALCPAGE*/
 .calc-page{padding-top:40px}.calc-page .calc{opacity:1;transform:none}.calc-cta{text-align:center;margin:10px 0 30px}
+
+/*FORMPAIR*/
+.form-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-pair .form-field{margin-bottom:0}.lead-form .form-pair{margin-bottom:12px}
+.lead-form select{width:100%;padding:14px 12px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px;border-radius:0;font-family:inherit}
+.lead-form select:invalid{color:#888}
+.qform .row select{width:100%;padding:12px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:15px}
+@media(max-width:600px){.form-pair{grid-template-columns:1fr;gap:12px}}
