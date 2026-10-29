@@ -16,14 +16,14 @@ document.querySelectorAll('.video-slot').forEach(function(slot){
     slot.innerHTML='';slot.appendChild(v);v.play();
   });
 });
-// Formspree lead forms (AJAX with normal POST fallback)
+// Web3Forms lead forms (AJAX with normal POST fallback)
 document.querySelectorAll('form.lead-form').forEach(function(f){
   f.addEventListener('submit',function(e){
     if(!window.fetch||!window.FormData)return; // fallback: normal POST
     e.preventDefault();
     var b=f.querySelector('button[type=submit]'),t=b.textContent;b.disabled=true;b.textContent='Sending...';
-    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
-      if(!r.ok)throw 0;
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){return r.json().then(function(d){return [r,d]})}).then(function(x){
+      if(!x[0].ok||!x[1].success)throw 0;
       Array.prototype.forEach.call(f.children,function(c){if(!c.classList.contains('lead-success'))c.style.display='none'});
       f.querySelector('.lead-success').hidden=false;
     }).catch(function(){b.disabled=false;b.textContent='Something went wrong — please call us';setTimeout(function(){b.textContent=t},4000)});
