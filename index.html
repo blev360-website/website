@@ -287,7 +287,9 @@
       <div class="form-field"><input type="text" name="name" placeholder="Your Name" autocomplete="name" required aria-label="Your name"></div>
       <div class="form-field"><input type="tel" name="phone" placeholder="Phone Number" autocomplete="tel" required aria-label="Phone number"></div>
       <div class="form-field"><input type="email" name="email" placeholder="Email (optional)" autocomplete="email" aria-label="Email (optional)"></div>
-      <div class="form-field"><input type="text" name="zip_or_city" placeholder="Job Site Zip Code or City" required aria-label="Job site zip code or city"></div>
+      <div class="form-field"><input type="text" name="city" placeholder="City" autocomplete="address-level2" required aria-label="City"></div>
+      <div class="form-pair"><div class="form-field"><input type="number" name="number_of_dumpsters" min="1" step="1" inputmode="numeric" placeholder="How many dumpsters do you have?" required aria-label="How many dumpsters do you have?"></div>
+      <div class="form-field"><select name="haul_frequency" required aria-label="How often is your dumpster emptied?"><option value="" disabled selected>How often is your dumpster emptied?</option><option>Multiple times a week</option><option>Weekly</option><option>Every 2 weeks</option><option>Monthly</option><option>Less than monthly</option><option>Not sure</option></select></div></div>
       <button type="submit" class="form-submit">Check My Area &amp; Book Your Free First Crunch →</button>
       <div class="lead-success" role="status" hidden>✅ <strong>You're all set!</strong> We got your request and will reach out soon. Need us now? Call <a href="tel:7209731391">(720) 973-1391</a>.</div>
     </form>
