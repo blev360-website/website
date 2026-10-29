@@ -1,0 +1,7 @@
+:root{--blue:#38B6FF}
+nav{border-bottom:3px solid #38B6FF!important}
+h1 em,h1 span{color:#38B6FF}
+h2{border-left:4px solid #38B6FF;padding-left:12px}
+section:nth-of-type(odd) h2,.section:nth-of-type(odd) h2{border-left-color:#E85D04}
+a{color:#38B6FF}
+footer{border-top:3px solid #E85D04!important}
