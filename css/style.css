@@ -256,7 +256,9 @@
     .nav-cta { padding: 10px 14px; letter-spacing: 0.08em; }
     .nav-links, .nav-phone { display: none; }
     .nav-hauling-mobile { display: inline-block; background: var(--orange); color: var(--white); padding: 8px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
-    .hero { grid-template-columns: 1fr; padding: 180px 24px 64px; gap: 40px; }
+    .hero { grid-template-columns: minmax(0, 1fr); padding: 180px 24px 64px; gap: 40px; }
+    .hero .free-badge { max-width: 100%; box-sizing: border-box; }
+    .hero-tag { max-width: 100%; flex-wrap: wrap; letter-spacing: 0.12em; }
     .hero-ghost { display: none; }
     .hero-stats { gap: 28px; }
     .half-banner { padding: 48px 24px; grid-template-columns: 1fr; }
@@ -363,7 +365,7 @@
  .reviews-box,.example,.price-card{padding:32px 22px}
 }
 footer p a{color:rgba(255,255,255,.45);text-decoration:none}footer p a:hover{color:var(--orange)}
-.free-badge{display:inline-block;background:var(--orange);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size: 22px;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;margin-bottom:22px;box-shadow:0 8px 30px rgba(232,93,4,.35)}
+.free-badge{display:inline-block;background:var(--orange);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size: 21px;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;margin-bottom:22px;box-shadow:0 8px 30px rgba(232,93,4,.35)}
 .hero .free-badge{display:block;width:max-content;max-width:100%}
 
 /* ===== BLUE / ORANGE BALANCE ===== */
