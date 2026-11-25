@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <style>
   .aurora-hero { min-height: auto; grid-template-columns: 1fr 380px; gap: 48px; padding-bottom: 72px; }
-  .aurora-hero h1 { font-size: clamp(50px, 6.4vw, 98px); }
+  .aurora-hero h1 { font-size: clamp(52px, 6.6vw, 102px); }
   .aurora-hero .hero-sub { max-width: 600px; color: rgba(255,255,255,0.78); font-weight: 400; }
   .aurora-hero .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 28px; }
   .aurora-hero .hero-call { margin-top: 24px; }
@@ -45,9 +45,9 @@
   .district-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 40px; }
   .district-card { background: var(--mid); padding: 28px 26px; border-top: 3px solid var(--blue); }
   .district-card:nth-child(odd) { border-top-color: var(--orange); }
-  .district-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; color: #fff; }
-  .district-card p { font-size: 16px; color: rgba(255,255,255,0.72); line-height: 1.6; }
-  .rolloff-note { margin-top: 28px; padding: 18px 22px; background: rgba(56,182,255,0.08); border-left: 4px solid var(--blue); font-size: 17px; color: rgba(255,255,255,0.85); max-width: 820px; line-height: 1.6; }
+  .district-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; color: #fff; }
+  .district-card p { font-size: 19px; color: rgba(255,255,255,0.72); line-height: 1.6; }
+  .rolloff-note { margin-top: 28px; padding: 18px 22px; background: rgba(56,182,255,0.08); border-left: 4px solid var(--blue); font-size: 19px; color: rgba(255,255,255,0.85); max-width: 820px; line-height: 1.6; }
   .rolloff-note strong { color: #fff; }
   .aurora-ba-wrap { max-width: 960px; margin-top: 36px; }
   .aurora-ba-wrap .gallery-grid { margin-top: 0; }
@@ -55,15 +55,15 @@
   .aurora-why-wrap .why-grid { max-width: 100%; margin-top: 28px; }
   .aurora-form-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: start; max-width: 1120px; }
   .aurora-cta-side { background: var(--mid); padding: 36px 32px; border-top: 4px solid var(--orange); }
-  .aurora-cta-side h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 32px; text-transform: uppercase; line-height: 1; margin-bottom: 12px; }
-  .aurora-cta-side p { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 20px; }
-  .aurora-cta-phone { display: inline-flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 36px; color: #fff; text-decoration: none; margin-bottom: 6px; }
+  .aurora-cta-side h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; text-transform: uppercase; line-height: 1; margin-bottom: 12px; }
+  .aurora-cta-side p { font-size: 19px; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 20px; }
+  .aurora-cta-phone { display: inline-flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 38px; color: #fff; text-decoration: none; margin-bottom: 6px; }
   .aurora-cta-phone span { color: var(--blue); }
   .aurora-cta-phone:hover { color: var(--orange); }
-  .aurora-cta-sub { font-size: 14px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 18px; }
+  .aurora-cta-sub { font-size: 15px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 18px; }
   .aurora-hours { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-  .aurora-hours h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 10px; }
-  .aurora-hours .hour-row { display: flex; justify-content: space-between; font-size: 16px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.78); }
+  .aurora-hours h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 10px; }
+  .aurora-hours .hour-row { display: flex; justify-content: space-between; font-size: 18px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.78); }
   .aurora-nearby-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 960px; margin-top: 28px; }
   .aurora-nearby-grid .area-item { padding: 14px 16px; }
   @media (max-width: 960px) {
@@ -211,7 +211,7 @@
     </div>
     <div class="hero-stats">
       <div><div class="stat-num co">½</div><div class="stat-label">Hauls for Most Clients</div></div>
-      <div><div class="stat-num cb" style="font-size:32px;line-height:1.15;">Up to<br>80%</div><div class="stat-label">Capacity Restored</div></div>
+      <div><div class="stat-num cb" style="font-size:34px;line-height:1.15;">Up to<br>80%</div><div class="stat-label">Capacity Restored</div></div>
       <div><div class="stat-num">5 min</div><div class="stat-label">On-Site Service</div></div>
       <div><div class="stat-num co">FREE</div><div class="stat-label">First Crunch</div></div>
     </div>
@@ -367,7 +367,7 @@
   </div>
 
   <div class="aurora-why-wrap">
-    <h2 class="section-title reveal" style="font-size:clamp(34px,4.6vw,58px)">Why Englewood Crews Choose <span class="bl">Dumpster</span> <span class="or">Crunchers</span></h2>
+    <h2 class="section-title reveal" style="font-size:clamp(38px,5vw,62px)">Why Englewood Crews Choose <span class="bl">Dumpster</span> <span class="or">Crunchers</span></h2>
     <div class="why-grid">
       <div class="why-item reveal"><div class="why-icon">🏋️</div><p><strong>The heaviest compaction drum in Colorado.</strong> More drum weight means deeper compaction and more usable space in every roll-off.</p></div>
       <div class="why-item reveal"><div class="why-icon">✅</div><p><strong>Your first crunch is always FREE.</strong> Zero commitment — we come out and prove the capacity gain before you spend anything.</p></div>
